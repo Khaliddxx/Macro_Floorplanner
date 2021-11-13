@@ -1,16 +1,32 @@
-# This is a sample Python script.
+import hdlparse.verilog_parser as vlog
+# generate random integer values
+from random import seed
+from random import randint
+# seed random number generator
+seed(1)
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+MODULE_PATH = "TestFiles/spm.synthesis.v"
+
+# HDL Parse Declarations
+vlog_ex = vlog.VerilogExtractor()
+vlog_mods = vlog_ex.extract_objects_from_source(MODULE_PATH)
+# vhdl_comps = vlog_ex.extract_objects(MODULE_PATH, vlog)
+
+with open(MODULE_PATH, 'rt') as fh:
+    code = fh.read()
+vlog_mods = vlog_ex.extract_objects(MODULE_PATH)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
 
+print('\n')
+for m in vlog_mods:
+    print('Module {}'.format(m.name))
+    for p in m.ports:
+        if p.mode == 'input':
+            print('\t{:8}{};'.format("reg", p.name))
+        else:
+            print('\t{:8}{};'.format("wire", p.name))
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# for c in vhdl_comps:
+#     print('Component "{}":'.format(c.name))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
