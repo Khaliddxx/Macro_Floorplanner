@@ -26,12 +26,20 @@ MODULE_PATH = "TestFiles/spm.synthesis.v"
 #         else:
 #             print('\t{:8}{};'.format("wire", p.name))
 
+class Net:
+    def __init__(self, port, comp_name):
+        self.port = port
+        self.comp_name = comp_name
+        # self.pin = pin
+
+
+    def print_net(self):
+        print("\t - ", self.port, " ( ", self.comp_name, " ", " )", " + USE SIGNAL ;")
 
 def parse():
     file = open(MODULE_PATH, 'rt')
     lines = file.readlines()
     file.close()
-
 
     print('Components')
     for line in lines:
@@ -40,7 +48,8 @@ def parse():
             semicolonLoc = line.find(";")
             # wirename = wire
             # line = line.split(" ")
-            #print(line[5:semicolonLoc])
+            port = line[5:semicolonLoc]
+            print(port)
 
         if line.find("input") != -1:
             semicolonLoc = line.find(";")
@@ -61,6 +70,7 @@ def parse():
             line = line[0:line.find(" (")]
             line = line.split(" ")[::-1]
             print(line[0]+ " " + line[1])
+            
 
         # if line.find("sky130" and "." and ";") != -1:
             # print(line[0:line.find(" (")])
