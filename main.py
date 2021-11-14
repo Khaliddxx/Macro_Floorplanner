@@ -5,7 +5,9 @@
 # # seed random number generator
 # seed(1)
 #
-MODULE_PATH = "TestFiles/spm.synthesis.v"
+MODULE_PATH = "/Users/rawansameh/Desktop/Macro_Floorplanner-main/TestFiles/spm.synthesis.v"
+
+
 #
 # # HDL Parse Declarations
 # vlog_ex = vlog.VerilogExtractor()
@@ -30,52 +32,52 @@ class Net:
     def __init__(self, port, comp_name):
         self.port = port
         self.comp_name = comp_name
-        # self.pin = pin
-
-
+    # self.pin = pin
+    
     def print_net(self):
         print("\t - ", self.port, " ( ", self.comp_name, " ", " )", " + USE SIGNAL ;")
+
 
 def parse():
     file = open(MODULE_PATH, 'rt')
     lines = file.readlines()
     file.close()
-
-    print('Components')
+    Comp = []
     for line in lines:
         line = line.strip()
-        if line.find("wire") != -1:
-            semicolonLoc = line.find(";")
-            # wirename = wire
-            # line = line.split(" ")
-            port = line[5:semicolonLoc]
-            print(port)
-
-        if line.find("input") != -1:
-            semicolonLoc = line.find(";")
-            # wirename = wire
-            # line = line.split(" ")
-            #print(line[6:semicolonLoc])
-
-        if line.find("output") != -1:
-            semicolonLoc = line.find(";")
-            # wirename = wire
-            # line = line.split(" ")
-           # print(line[6:semicolonLoc])
-
-
-
+        # if line.find("wire") != -1:
+        #     semicolonLoc = line.find(";")
+        #     # wirename = wire
+        #     # line = line.split(" ")
+        #     port = line[5:semicolonLoc]
+        #     print(port)
+        #
+        # if line.find("input") != -1:
+        #     semicolonLoc = line.find(";")
+        # wirename = wire
+        # line = line.split(" ")
+        # print(line[6:semicolonLoc])
+        
+        # if line.find("output") != -1:
+        #     semicolonLoc = line.find(";")
+        # wirename = wire
+        # line = line.split(" ")
+        # print(line[6:semicolonLoc])
+        
         if line.find("sky130") != -1:
             # print(line[0:line.find(" (")])
             line = line[0:line.find(" (")]
             line = line.split(" ")[::-1]
-            print(line[0]+ " " + line[1])
-            
+            Comp.append(line[0] + " " + line[1])
+    # print(line[0] + " " + line[1])
 
-        # if line.find("sky130" and "." and ";") != -1:
-            # print(line[0:line.find(" (")])
+# if line.find(".") != -1:
+#     print(line[0:line.find(",")])
 
-
+print("COMPONENTS %d ;" % len(Comp))
+for x in Comp:
+    print("\t - %s" % x)
+    print ("END COMPONENTS")
 
 
 parse()
