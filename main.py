@@ -51,7 +51,8 @@ def parse():
         #     # line = line.split(" ")
         #     port = line[5:semicolonLoc]
         #     print(port)
-        #
+
+#This is for the Nets and Pins:
         # if line.find("input") != -1:
         #     semicolonLoc = line.find(";")
         # wirename = wire
@@ -69,19 +70,17 @@ def parse():
             line = line[0:line.find(" (")]
             line = line.split(" ")[::-1]
             Comp.append(line[0] + " " + line[1])
-    # print(line[0] + " " + line[1])
 
-# if line.find(".") != -1:
-#     print(line[0:line.find(",")])
 
-print("COMPONENTS %d ;" % len(Comp))
-for x in Comp:
-    print("\t - %s" % x)
+
+
+    print("COMPONENTS %d ;" % len(Comp))
+    for x in Comp:
+        print("\t - %s" % x)
     print ("END COMPONENTS")
 
 
 parse()
 
-# for c in vhdl_comps:
-#     print('Component "{}":'.format(c.name))
+
 
