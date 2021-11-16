@@ -5,7 +5,7 @@
 # # seed random number generator
 # seed(1)
 #
-MODULE_PATH = "/Users/rawansameh/Desktop/Macro_Floorplanner-main/TestFiles/spm.synthesis.v"
+MODULE_PATH = "./TestFiles/spm.synthesis.v"
 
 
 #
@@ -43,14 +43,9 @@ def parse():
     lines = file.readlines()
     file.close()
     Comp = []
+    Wires = []
     for line in lines:
         line = line.strip()
-        # if line.find("wire") != -1:
-        #     semicolonLoc = line.find(";")
-        #     # wirename = wire
-        #     # line = line.split(" ")
-        #     port = line[5:semicolonLoc]
-        #     print(port)
 
 #This is for the Nets and Pins:
         # if line.find("input") != -1:
@@ -64,23 +59,29 @@ def parse():
         # wirename = wire
         # line = line.split(" ")
         # print(line[6:semicolonLoc])
-        
+
+        # wires
+        if line.find("wire") != -1:
+            semicolonLoc = line.find(";")
+            # line = line.split(" ")
+            port = line[5:semicolonLoc]
+            Wires.append(port)
+            # print(port)
+
         if line.find("sky130") != -1:
             # print(line[0:line.find(" (")])
             line = line[0:line.find(" (")]
             line = line.split(" ")[::-1]
             Comp.append(line[0] + " " + line[1])
 
-
-
-
     print("COMPONENTS %d ;" % len(Comp))
     for x in Comp:
         print("\t - %s" % x)
-    print ("END COMPONENTS")
+    print("END COMPONENTS")
 
+    print("NETS %d ;" % len(Wires))
+    for w in Wires:
+        print("\t - %s" % w)
+    print("END NETS\n")
 
 parse()
-
-
-
