@@ -5,7 +5,7 @@
 # # seed random number generator
 # seed(1)
 #
-MODULE_PATH = "/Users/rawansameh/Desktop/Macro_Floorplanner-main/TestFiles/spm.synthesis.v"
+MODULE_PATH = "/Users/rawansameh/Desktop/pythonProject1/TestFiles/spm.synthesis.v"
 
 
 #
@@ -32,8 +32,8 @@ class Net:
     def __init__(self, port, comp_name):
         self.port = port
         self.comp_name = comp_name
-    # self.pin = pin
-    
+        # self.pin = pin
+
     def print_net(self):
         print("\t - ", self.port, " ( ", self.comp_name, " ", " )", " + USE SIGNAL ;")
 
@@ -43,33 +43,42 @@ def parse():
     lines = file.readlines()
     file.close()
     Comp = []
+    wires =[]
+    inputs ={}
     for line in lines:
         line = line.strip()
-        # if line.find("wire") != -1:
-        #     semicolonLoc = line.find(";")
-        #     # wirename = wire
-        #     # line = line.split(" ")
-        #     port = line[5:semicolonLoc]
-        #     print(port)
+        if line.find("wire") != -1:
+            semicolonLoc = line.find(";")
+            # wirename = wire
+            # line = line.split(" ")
+            wires.append(line[5:semicolonLoc])
 
-#This is for the Nets and Pins:
-        # if line.find("input") != -1:
-        #     semicolonLoc = line.find(";")
-        # wirename = wire
-        # line = line.split(" ")
-        # print(line[6:semicolonLoc])
-        
+
+  #This is for the Nets and Pins:
+        #if line.find("input") != -1:
+           # semicolonLoc = line.find(";")
+            #wirename = wire
+            #line = line.split(" ")
+            #inputs[line[6:semicolonLoc]] = 0
+
         # if line.find("output") != -1:
         #     semicolonLoc = line.find(";")
-        # wirename = wire
-        # line = line.split(" ")
+            # wirename = wire
+            # line = line.split(" ")
         # print(line[6:semicolonLoc])
-        
+
         if line.find("sky130") != -1:
             # print(line[0:line.find(" (")])
             line = line[0:line.find(" (")]
             line = line.split(" ")[::-1]
             Comp.append(line[0] + " " + line[1])
+            # print(line[0] + " " + line[1])
+
+
+
+        # if "[" in inputs:
+        #     Loc = inputs.find(":")
+        #     input[inputs] = Loc
 
 
 
