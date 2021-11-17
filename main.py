@@ -6,7 +6,8 @@
 # seed(1)
 #
 MODULE_PATH = "/Users/rawansameh/Desktop/pythonProject1/TestFiles/spm.synthesis.v"
-
+path = "./libraries/ProjectFiles/TestLEF.lef"
+Comp = []
 
 #
 # # HDL Parse Declarations
@@ -42,9 +43,10 @@ def parse():
     file = open(MODULE_PATH, 'rt')
     lines = file.readlines()
     file.close()
-    Comp = []
+
     wires =[]
     inputs ={}
+
     for line in lines:
         line = line.strip()
         if line.find("wire") != -1:
@@ -66,21 +68,16 @@ def parse():
             # wirename = wire
             # line = line.split(" ")
         # print(line[6:semicolonLoc])
-
+        if line.startswith("module"):
+            bracket = line.find("(")
+            global module_name
+            module_name = line[7:bracket]
         if line.find("sky130") != -1:
             # print(line[0:line.find(" (")])
             line = line[0:line.find(" (")]
             line = line.split(" ")[::-1]
             Comp.append(line[0] + " " + line[1])
             # print(line[0] + " " + line[1])
-
-
-
-        # if "[" in inputs:
-        #     Loc = inputs.find(":")
-        #     input[inputs] = Loc
-
-
 
 
     print("COMPONENTS %d ;" % len(Comp))
