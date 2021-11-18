@@ -6,7 +6,7 @@
 # seed(1)
 import linecache
 #
-MODULE_PATH = "/Users/rawansameh/Desktop/pythonProject1/TestFiles/lut_s44.synthesis.v"
+MODULE_PATH = "/Users/rawansameh/Desktop/pythonProject1/TestFiles/spm.synthesis.v"
 path = "./Users/rawansameh/Desktop/pythonProject1/libraries/ProjectFiles/TestLEF.lef"
 Comp = []
 wires =[]
@@ -20,7 +20,7 @@ LayersSouth = []
 pinEast = []
 LayerEast = []
 pinEast2 = []
-path_pin = "/Users/rawansameh/Desktop/lut_s44.pin.lef"
+path_pin = "/Users/rawansameh/Desktop/spm.pin.lef"
 #
 # # HDL Parse Declarations
 # vlog_ex = vlog.VerilogExtractor()
