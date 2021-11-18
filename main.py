@@ -9,6 +9,17 @@ import linecache
 MODULE_PATH = "/Users/rawansameh/Desktop/pythonProject1/TestFiles/spm.synthesis.v"
 path = "./Users/rawansameh/Desktop/pythonProject1/libraries/ProjectFiles/TestLEF.lef"
 Comp = []
+wires =[]
+inputs ={}
+outputs = {}
+pinsNorth= []
+LayersNorth = []
+pinsSouth = []
+pinsSouth2=[]
+LayersSouth = []
+pinEast = []
+LayerEast = []
+pinEast2 = []
 path_pin = "/Users/rawansameh/Desktop/spm.pin.lef"
 #
 # # HDL Parse Declarations
@@ -37,9 +48,7 @@ def parse():
     lines = file.readlines()
     file.close()
 
-    wires =[]
-    inputs ={}
-    outputs = {}
+
     for line in lines:
         line = line.strip()
         if line.find("wire") != -1:
@@ -91,11 +100,7 @@ def parse():
     file2 = open(path_pin, 'rt')
     lines1 = file2.readlines()
     file2.close()
-    pinsNorth= []
-    LayersNorth = []
 
-    pinsSouth = []
-    LayersSouth = []
 
     for line1 in lines1:
         if line1.startswith("#N"):
@@ -127,23 +132,41 @@ def parse():
         if lines1[countS+1].startswith("#E"):
             break
 
-    pinsSouth2 = []
     for x in pinsSouth:
         comma = x.find(',')
         b11 = x.find(']')
         b22 = x.find(';')
-        # if x.find(']') != -1:
         LayersSouth.append(x[comma+2:b22])
         pinsSouth2.append(x.replace(x[comma:b22+2], " "))
-        # else:
-        #     LayersSouth.append(x[comma + 2:b22])
-        #     pinsSouth = pinsSouth.replace(x[comma::], "")
 
 
-    # pinEast = []
-    # LayerEast = []
-    #
+    countLines = 0
+    for i in lines1:
+        countLines += 1
 
+    countLines =  countLines - 1
+    countE = 0
+    for j in lines1:
+        if j.find("#E") != -1:
+            break
+        else:
+            countE += 1
+
+
+    for line5 in lines1:
+        if countE == countLines:
+            break
+        else:
+            pinEast.append(lines1[countE+1])
+        countE+=1
+
+
+    for x in pinEast:
+        comma = x.find(',')
+        b11 = x.find(']')
+        b22 = x.find(';')
+        LayerEast.append(x[comma+2:b22])
+        pinEast2.append(x.replace(x[comma:b22+2], " "))
 
 
 
