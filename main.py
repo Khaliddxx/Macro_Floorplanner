@@ -5,8 +5,9 @@
 # # seed random number generator
 # seed(1)
 #
-MODULE_PATH = "/Users/rawansameh/Desktop/pythonProject1/TestFiles/spm.synthesis.v"
-path = "./libraries/ProjectFiles/TestLEF.lef"
+MODULE_PATH = "./TestFiles/spm.synthesis.v"
+path = "./TestFiles/TestLEF.lef"
+path_pin = "./TestFiles/spm.pin"
 Comp = []
 
 #
@@ -29,23 +30,28 @@ Comp = []
 #         else:
 #             print('\t{:8}{};'.format("wire", p.name))
 
-class Net:
-    def __init__(self, port, comp_name):
-        self.port = port
-        self.comp_name = comp_name
-        # self.pin = pin
+# class Net:
+#     def __init__(self, port, comp_name):
+#         self.port = port
+#         self.comp_name = comp_name
+#         # self.pin = pin
+#
+#     def print_net(self):
+#         print("\t - ", self.port, " ( ", self.comp_name, " ", " )", " + USE SIGNAL ;")
 
-    def print_net(self):
-        print("\t - ", self.port, " ( ", self.comp_name, " ", " )", " + USE SIGNAL ;")
 
 
-def parse():
+
+def parse1():
     file = open(MODULE_PATH, 'rt')
     lines = file.readlines()
     file.close()
 
     wires =[]
     inputs ={}
+    outputs = {}
+    pinsNorth = []
+    LayersNorth = []
 
     for line in lines:
         line = line.strip()
@@ -57,21 +63,37 @@ def parse():
 
 
   #This is for the Nets and Pins:
-        #if line.find("input") != -1:
-           # semicolonLoc = line.find(";")
-            #wirename = wire
-            #line = line.split(" ")
-            #inputs[line[6:semicolonLoc]] = 0
+        if line.startswith("input"):
+            semicolonLoc = line.find(";")
+            b1 = line.find('[')
+            b2 = line.find(']')
+            c = line.find(':')
+            if line.find('[') != -1:
+                var = line[b1+1:c]
+                line = line.replace(line[b1-1:b2+1], "")
+                semicolonLoc2 = line.find(";")
+                inputs[line[6:semicolonLoc2]] = var
+            else:
+                inputs[line[6:semicolonLoc]] = 0
 
-        # if line.find("output") != -1:
-        #     semicolonLoc = line.find(";")
-            # wirename = wire
-            # line = line.split(" ")
-        # print(line[6:semicolonLoc])
+        if line.find("output") != -1:
+            semicolonLoc = line.find(";")
+            b1 = line.find('[')
+            b2 = line.find(']')
+            c = line.find(':')
+            if line.find('[') != -1:
+                var = line[b1+1:c]
+                line = line.replace(line[b1-1:b2+1], "")
+                semicolonLoc2 = line.find(";")
+                outputs[line[6:semicolonLoc2]] = var
+            else:
+                outputs[line[6:semicolonLoc]] = 0
+
         if line.startswith("module"):
             bracket = line.find("(")
             global module_name
             module_name = line[7:bracket]
+
         if line.find("sky130") != -1:
             # print(line[0:line.find(" (")])
             line = line[0:line.find(" (")]
@@ -79,14 +101,20 @@ def parse():
             Comp.append(line[0] + " " + line[1])
             # print(line[0] + " " + line[1])
 
+    file2 = open(path_pin, 'rt')
+    lines = file2.readlines()
+    file2.close()
 
-    print("COMPONENTS %d ;" % len(Comp))
-    for x in Comp:
-        print("\t - %s" % x)
-    print ("END COMPONENTS")
+    for line in lines:
+        line = line.strip()
+        if line.startswith("#S"):
+            break
+        else:
+            for line1 in lines:
+                pinsNorth.append(line1[0:b2])
 
 
-parse()
 
+parse1()
 
 
